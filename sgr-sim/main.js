@@ -147,8 +147,8 @@ function init(data) {
     const material = new THREE.PointsMaterial({
         color: 0xffffff,
         map: texture,
-        size: 0.2,
-        opacity: 0.25,
+        size: 0.1,
+        opacity: 0.2,
         blending: THREE.AdditiveBlending, // required
         depthTest: false, // required
         transparent: true
