@@ -3,7 +3,7 @@ import { GUI } from '../js/three/examples/jsm/libs/dat.gui.module.js';
 import Stats from '../js/three/examples/jsm/libs/stats.module.js';
 import { TrackballControls } from '../js/three/examples/jsm/controls/TrackballControls.js';
 
-let data_file = 'data/jason-sgr-10000.json';
+let data_file = 'data/jason-sgr-100000.json';
 
 let camera, scene, renderer, controls, stats, gui;
 let windowHalfX, windowHalfY;
@@ -68,6 +68,7 @@ $(document).ready(function() {
         url: data_file,
         dataType: 'json',
         success: function(this_data) {
+            console.log('done downloading');
             $(progress_container).hide();
             data = this_data['xyz'];
             init(data[0]);
