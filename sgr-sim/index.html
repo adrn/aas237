@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+
+        <title>Milky Way – Sagittarius Simulation</title>
+
+        <!-- CSS / Styling -->
+        <link rel="stylesheet" type="text/css" href="style.css">
+        <link href='http://fonts.googleapis.com/css?family=Roboto:400,100,500,700,900,500italic,300,300italic,400italic' rel='stylesheet' type='text/css'>
+
+        <!-- Javscript dependencies -->
+        <script src="http://code.jquery.com/jquery.min.js"></script>
+        <!--<script src="../js/jquery.min.js"></script>-->
+        <script src="../js/jquery.ajax-progress.js"></script>
+        <script src="../js/progressbar.min.js"></script>
+
+
+    </head>
+    <body>
+        <script type='text/javascript'>
+
+            $(document).ready(function() {
+                var div = $("<div></div>").attr("id","webgl-notify")
+                                          .attr("class", "top-center");
+                if (!window.WebGLRenderingContext) {
+                    // Browser has no idea what WebGL is. Suggest they
+                    // get a new browser by presenting the user with link to
+                    // http://get.webgl.org
+                    div.html("Oh no! Your browser does not seem to support WebGL.");
+                    $("body").append(div);
+                    $("#info").hide();
+                    return;
+                }
+
+                var canvas = document.createElement('canvas');
+                gl = canvas.getContext("webgl");
+                if (!gl && !canvas.getContext("webkit-3d")) {
+
+                    div.html("It seems like your browser supports WebGL, however it does not appear to be enabled. Enable WebGL, then reload the page.<br/>" +
+                        "<a href='http://www.browserleaks.com/webgl#howto-enable-disable-webgl'>How to enable WebGL</a>");
+                    $("body").append(div);
+                    $("#info").hide();
+                    return;
+                }
+
+            });
+
+        </script>
+
+        <div id="container"></div>
+        <div id="progress"></div>
+        <script type="module" src="./main.js"></script>
+
+        <div id="info" class="top-center">
+            <b>Milky Way + Sagittarius Simulation</b></br>
+            Left click and drag: rotate, Scroll wheel: zoom
+        </div>
+
+        <div id="footer">
+            <p>Adrian Price-Whelan // <a href="https://github.com/adrn">@adrn</a> // <a href="https://twitter.com/adrianprw">@adrianprw</a></p>
+            <p>Simulation by Jason A. S. Hunt</p>
+        </div>
+
+    </body>
+</html>
