@@ -63,7 +63,7 @@ $(document).ready(function() {
 
     $.ajax({
         method: 'GET',
-        url: 'jason-sgr-100000.json',
+        url: 'data/jason-sgr-100000.json',
         dataType: 'json',
         success: function(this_data) {
             $(progress_container).hide();
