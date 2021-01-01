@@ -1,3 +1,5 @@
+// If we want to buffer playback: http://jsfiddle.net/ikerr/qzny3sg1/
+
 import * as THREE from '../js/three/three.module.js';
 import { GUI } from '../js/three/examples/jsm/libs/dat.gui.module.js';
 import Stats from '../js/three/examples/jsm/libs/stats.module.js';
@@ -143,10 +145,10 @@ function init(data) {
         d[3*i + 1] = data[k][i][1];
         d[3*i + 2] = data[k][i][2];
     }
-    console.log('done prepping data')
+    console.log('done prepping data', d);
 
     geometry.setAttribute('position',
-                            new THREE.BufferAttribute(d, 3));
+                          new THREE.BufferAttribute(d, 3));
     const material = new THREE.PointsMaterial({
         color: 0xffffff,
         map: texture,
