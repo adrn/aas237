@@ -6,8 +6,10 @@ import Stats from '../js/three/examples/jsm/libs/stats.module.js';
 import { TrackballControls } from '../js/three/examples/jsm/controls/TrackballControls.js';
 
 // let data_file = 'data/jason-sgr-100000-outeronly.json';
-// let data_file = 'data/jason-sgr-10000-outeronly.json';
+// let disk_key = 'xyz';
+
 let data_file = 'data/chervin-sgr-100000.json';
+let disk_key = 'disk_xyz';
 
 let camera, scene, renderer, controls, stats, gui;
 let windowHalfX, windowHalfY;
@@ -71,11 +73,16 @@ $(document).ready(function() {
         success: function(this_data) {
             console.log('done downloading');
             $(progress_container).hide();
-            data = this_data['disk_xyz'];
+            data = this_data[disk_key];
+            // console.log(data[0]);
             init(data[0]);
             animate();
         },
-        error: function() { },
+        error: function(e, etext) {
+            console.log("error");
+            console.log(e);
+            console.log(etext);
+        },
         progress: function(e) {
             //make sure we can compute the length
             if(e.lengthComputable) {
