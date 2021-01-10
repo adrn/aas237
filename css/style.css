@@ -78,6 +78,10 @@ p:last-child {
 
 a {
     text-decoration: none;
+    color: var(--tab-blue);
+}
+
+.navigation a {
     font-weight: 700;
     color: #000;
     padding: 0 20px;
@@ -88,7 +92,7 @@ a.slides {
 }
 
 a:hover {
-    color: var(--tab-blue);
+    color: var(--tab-lightblue);
 }
 
 @media (min-width: 800px) {
@@ -115,6 +119,7 @@ a:hover {
 
 .footer a {
     color: var(--tab-lightblue);
+    padding: 0 20px;
 }
 
 .footer a:hover {
