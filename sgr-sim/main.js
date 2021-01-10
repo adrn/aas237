@@ -5,7 +5,9 @@ import { GUI } from '../js/three/examples/jsm/libs/dat.gui.module.js';
 import Stats from '../js/three/examples/jsm/libs/stats.module.js';
 import { TrackballControls } from '../js/three/examples/jsm/controls/TrackballControls.js';
 
-let data_file = 'data/jason-sgr-100000.json';
+// let data_file = 'data/jason-sgr-100000-outeronly.json';
+// let data_file = 'data/jason-sgr-10000-outeronly.json';
+let data_file = 'data/chervin-sgr-100000.json';
 
 let camera, scene, renderer, controls, stats, gui;
 let windowHalfX, windowHalfY;
@@ -15,6 +17,7 @@ var config = {
     frame: null,
     start_time: null,
     _running: true,
+    loop: true,
     stop: function() {
         this._running = false;
     },
@@ -36,14 +39,11 @@ let progress_container = document.getElementById('progress');
 
 var progress = new ProgressBar.Circle(progress_container, {
     color: '#aaa',
-    // This has to be the same size as the maximum width to
-    // prevent clipping
     strokeWidth: 4,
     trailWidth: 2,
-    //easing: 'easeInOut',
-    //duration: 2000,
     text: {
-      autoStyleContainer: false
+        value: 'Loading simulation data...',
+        autoStyleContainer: false
     },
     from: { color: '#333', width: 2 },
     to: { color: '#31a354', width: 4 },
@@ -61,7 +61,6 @@ var progress = new ProgressBar.Circle(progress_container, {
     }
 });
 progress.text.style.fontSize = '22pt';
-// progress.animate(1.0);  // Number from 0.0 to 1.0
 
 $(document).ready(function() {
 
@@ -72,7 +71,7 @@ $(document).ready(function() {
         success: function(this_data) {
             console.log('done downloading');
             $(progress_container).hide();
-            data = this_data['xyz'];
+            data = this_data['disk_xyz'];
             init(data[0]);
             animate();
         },
@@ -127,6 +126,7 @@ function init(data) {
     anim_folder.add(config, 'stop');
     anim_folder.add(config, 'start');
     anim_folder.add(config, 'reset');
+    anim_folder.add(config, 'loop');
     anim_folder.open()
 
     // Set up the particle texture:
@@ -138,21 +138,20 @@ function init(data) {
 
     const geometry = new THREE.BufferGeometry();
 
-    var k = 0;  // initial timestep
-    var d = new Float32Array(data[k].length * 3);
-    for (let i=0; i < data[k].length; i++) {
-        d[3*i + 0] = data[k][i][0];
-        d[3*i + 1] = data[k][i][1];
-        d[3*i + 2] = data[k][i][2];
+    var d = new Float32Array(data.length * 3);
+    for (let i=0; i < data.length; i++) {
+        d[3*i + 0] = data[i][0];
+        d[3*i + 1] = data[i][1];
+        d[3*i + 2] = data[i][2];
     }
-    console.log('done prepping data', d);
+    console.log('done prepping data');
 
     geometry.setAttribute('position',
                           new THREE.BufferAttribute(d, 3));
     const material = new THREE.PointsMaterial({
         color: 0xffffff,
         map: texture,
-        size: 0.1,
+        size: 0.2,
         opacity: 0.2,
         blending: THREE.AdditiveBlending, // required
         depthTest: false, // required
@@ -217,7 +216,12 @@ function render() {
     if (this_frame == config.frame)
         return true;
     else if (this_frame >= data.length)
-        return false;
+        if (config.loop == true) {
+            config.frame = 0;
+            this_frame = 0;
+        } else {
+            return false;
+        }
     else if (config._running != true)
         return false;
 
