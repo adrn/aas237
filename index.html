@@ -5,11 +5,11 @@
   <body>
     <div class="site">
       <header class="header">
-        <h1 class="title">Adrian Price-Whelan &#8212; AAS 237 Plenary</h1>
+        <h1 class="maintitle">Adrian Price-Whelan &#8212; AAS 237 Plenary</h1>
 
         <nav class="navigation">
           <ul>
-            <li><a href="http://adrian.pw/" class='slides'>slides</a></li>
+            <li><a href="https://users.flatironinstitute.org/~apricewhelan/aas237/content/Adrian_Price-Whelan_AAS237.pdf" class='slides'>slides</a></li>
             <li><a href="http://adrian.pw/">adrian.pw</a></li>
           </ul>
         </nav><!-- .navigation -->
@@ -32,11 +32,11 @@
             mass distribution and dynamical evolution of the Galaxy</p>
 
           <p>Mergers leave behind streams: phase-coherent structures that
-            provide an important way of constraining dark matter properties</p>
+            provide an important way of constraining dark matter properties.</p>
 
           <p>Equilibrium dynamics will be superseded by methods that directly
             model these phase-coherent structures and deliver more precise
-            constraints on the evolution and dark matter content of the Galaxy
+            constraints on the evolution and dark matter content of the Galaxy.
           </p>
 
           <hr />
@@ -47,7 +47,7 @@
             <ul>
               <li>
                 <a href="sgr-sim/">
-                  Milky Way response to Sagittarius dwarf galaxy
+                  Milky Way disk response to the Sagittarius dwarf galaxy
                 </a>
               </li>
             </ul>
@@ -57,15 +57,127 @@
           <!-- ------------------- -->
           <h1>Animations / Movies</h1>
 
-          <p>Chervin sim xy xz</p>
-          <p>Chervin sim anticenter</p>
-          <p>Phase spiral Lz bins</p>
-          <p>Phase spiral impulse</p>
-          <p>Pal 5 isochrone filter</p>
-          <p>Field of Streams step movie</p>
-          <p>Stream forming simulation (from personal webpage)</p>
-          <p>Stream + subhalo</p>
+          <p class="title">
+              N-body simulation demonstrating that the Sagittarius dwarf galaxy
+              causes large-scale distortions and perturbations to the Milky Way disk.
+          </p>
+          <video width="100%" height="400px" controls loop>
+              <source src="https://users.flatironinstitute.org/~apricewhelan/aas237/movies/chervin-sag-xy-xz.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+          </video>
+          <p class="caption">
+              Logarithmic surface density for face-on and edge-on projections of the Milky Way star particles in the simulation.
+              The red marker shows the position of the center of mass of the Sagittarius analog galaxy.
+              Animation by A. Price-Whelan; Simulation by C. Laporte;
+              <a href="https://ui.adsabs.harvard.edu/abs/2018MNRAS.481..286L/abstract">Laporte et al. 2018</a>.
+          </p>
 
+          <video width="100%" height="400px" controls loop>
+              <source src="https://users.flatironinstitute.org/~apricewhelan/aas237/movies/chervin-sag-xy-xz-with-sag.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+          </video>
+          <p class="caption">
+              Same as the previous animation, but with Sagittarius particles shown in the edge-on projection (warm colors).
+              Animation by A. Price-Whelan; Simulation by C. Laporte;
+              <a href="https://ui.adsabs.harvard.edu/abs/2018MNRAS.481..286L/abstract">Laporte et al. 2018</a>.
+          </p>
+
+          <video width="100%" height="400px" controls loop>
+              <source src="https://users.flatironinstitute.org/~apricewhelan/aas237/movies/chervin-sag-xy-xz-sag-r.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+          </video>
+          <p class="caption">
+              Galactocentric distance of the Sagittarius analog galaxy in the simulation.
+              This video is time-synchronized with the previous movie.
+              Animation by A. Price-Whelan; Simulation by C. Laporte;
+              <a href="https://ui.adsabs.harvard.edu/abs/2018MNRAS.481..286L/abstract">Laporte et al. 2018</a>.
+          </p>
+
+          <video width="100%" height="400px" controls loop>
+              <source src="https://users.flatironinstitute.org/~apricewhelan/aas237/movies/chervin-sag-meanz-vz.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+          </video>
+          <p class="caption">
+              Mean vertical position, z, and vertical velocity, vz, for stars in the simulated Milky Way disk.
+              Animation by A. Price-Whelan; Simulation by C. Laporte;
+              <a href="https://ui.adsabs.harvard.edu/abs/2018MNRAS.481..286L/abstract">Laporte et al. 2018</a>.
+          </p>
+
+          <video width="100%" height="400px" controls loop>
+              <source src="https://users.flatironinstitute.org/~apricewhelan/aas237/movies/chervin-sag-sky-anticenter.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+          </video>
+          <p class="caption">
+              Surface density of particles in Galactic coordinates for an observer fixed at the present-day solar position (i.e., not moving with the disk stars).
+              The view is centered on the Galactic anticenter, rather than the Galactic center.
+              Note the feather-like disturbances to the outer disk that are raised from the repeated passages of Sagittarius.
+              Animation by A. Price-Whelan; Simulation by C. Laporte;
+              <a href="https://ui.adsabs.harvard.edu/abs/2018MNRAS.481..286L/abstract">Laporte et al. 2018</a>.
+          </p>
+
+
+          <p class="title">
+              <i>Gaia</i> Phase-space Spiral
+          </p>
+
+          <video width="100%" height="400px" controls loop>
+              <source src="https://users.flatironinstitute.org/~apricewhelan/aas237/movies/snail-sub-smooth.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+          </video>
+          <p class="caption">
+              A visualization of the vertical kinematics of stars in Gaia EDR3 with high signal-to-noise parallax measurements and radial velocity measurements.
+              The left panel shows raw density, and the right panel shows density residual after subtracting out a smoothed version of the density distribution.
+              Each frame in the movie is a different selection in angular momentum, Lz, showing that different parts of the disk (i.e. different angular momenta)
+              respond differently to the impulse from Sagittarius.
+              Animation by A. Price-Whelan.
+          </p>
+
+          <video width="100%" height="400px" controls loop>
+              <source src="https://users.flatironinstitute.org/~apricewhelan/aas237/movies/spiral.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+          </video>
+          <p class="caption">
+              A conceptual visualization of how the phase-space spiral forms.
+              This shows 1D orbit calculations for an initial population of "star" particles on trajectories in a sech^2 potential model.
+              At t=0, an impulse (velocity kick) is given to all particles in the +vz direction.
+              The phase-spiral forms as a caustic in the phase-space density as the orbits wind up.
+              Animation by A. Price-Whelan.
+          </p>
+
+
+          <p class="title">
+              Stellar streams
+          </p>
+          <video width="100%" height="400px" controls loop>
+              <source src="https://users.flatironinstitute.org/~apricewhelan/aas237/movies/pal5_isochrone.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+          </video>
+          <p class="caption">
+              Demonstration of using a matched-filter (isochrone filter) to select stars at a given distance in the stellar halo.
+              This field is centered on the Palomar 5 stream, which appears around a distance of ~20 kpc.
+              Data: Legacy Surveys. Animation by A. Price-Whelan.
+          </p>
+
+          <img width="100%" src="https://users.flatironinstitute.org/~apricewhelan/aas237/movies/fos-icrs.gif" />
+          <p class="caption">
+              A visualization of stellar streams and substructures in the stellar halo around the Milky Way.
+              Each slice is a different distance.
+              Data: Legacy Surveys. Animation by N. Shipp, A. Price-Whelan.
+          </p>
+
+          <video width="100%" height="400px" controls loop>
+              <source src="http://adrian.pw/talkviz/movies/stream_xy.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+          </video>
+          <p class="caption">
+              N-body simulation of a globular cluster disrupting and forming a thin stellar stream in a simple model of the Milky Way's mass distribution.
+              Simulation and animation by A. Price-Whelan.
+          </p>
+
+          <!---
+          <p>Stream + subhalo</p> -->
+
+          <br/>
           <hr />
 
           <!-- ------------------- -->

@@ -28,7 +28,7 @@ hr {
     display: block;
     height: 1px;
     border: 0;
-    border-top: 1px solid #ccc;
+    border-top: 1px solid #aaa;
     margin: 2em 0;
     padding: 0;
 }
@@ -55,13 +55,13 @@ p:last-child {
     text-align: center;
 }
 
-.title {
+.maintitle {
     margin: 0;
     font-weight: 600;
 }
 
 @media (min-width: 800px) {
-    .title {
+    .maintitle {
         float: left;
     }
 }
@@ -99,7 +99,7 @@ a:hover {
     .navigation {
         float: right;
     }
-    a {
+    .navigation a {
         padding: 0 0 0 20px;
     }
 }
@@ -139,4 +139,20 @@ a:hover {
     .footer .column.last {
         padding-right: 0;
     }
+}
+
+.title {
+    font-size: 150%;
+    margin-top: 16px;
+    margin-bottom: 24px;
+    font-weight: 600;
+}
+
+p.caption {
+    margin: 0 32px;
+    margin-bottom: 48px;
+    margin-top: 10px;
+    line-height: 10pt;
+    font-size: 85%;
+    color: #666666;
 }
