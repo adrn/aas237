@@ -18,7 +18,7 @@ var config = {
     frame: null,
     start_time: null,
     _running: true,
-    loop: false,
+    loop: true,
     stop: function() {
         this._running = false;
     },
