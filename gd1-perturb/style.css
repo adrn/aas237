@@ -1,0 +1,53 @@
+html {
+    font-family: "Roboto";
+    width: 100%;
+}
+
+body {
+    background-color: #111111;
+    margin: 0px;
+    overflow: hidden;
+    font-weight: 200;
+    width: 100%;
+}
+
+.top-center {
+    top: 0px;
+    padding: 5px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+#info {
+    position: absolute;
+    color: #ccc;
+    width: 100%;
+}
+
+a {
+    color:#0078ff;
+}
+
+#footer {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    font-size: 10pt;
+    color: #bbb;
+}
+
+#webgl-notify {
+    font-weight: 400;
+    color: #ddd;
+    width: 40%;
+}
+
+#progress {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 200px;
+    height: 200px;
+    margin-left: -100px; /* -1/2 height */
+    margin-top: -100px; /* -1/2 height */
+}
