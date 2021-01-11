@@ -6,17 +6,19 @@ import Stats from '../js/three/examples/jsm/libs/stats.module.js';
 import { TrackballControls } from '../js/three/examples/jsm/controls/TrackballControls.js';
 
 let data_file = 'data/gd1-perturbed-orbits.json';
-let disk_key = 'stream';
+let key = 'stream';
+
+let disk_file = 'data/disk.json';
 
 let camera, scene, renderer, controls, stats, gui;
 let windowHalfX, windowHalfY;
-let data, particles;
+let stream_data, disk_data, perturber_data, particles = {};
 var config = {
     rate: 30,
     frame: null,
     start_time: null,
     _running: true,
-    loop: true,
+    loop: false,
     stop: function() {
         this._running = false;
     },
@@ -70,10 +72,22 @@ $(document).ready(function() {
         success: function(this_data) {
             console.log('done downloading');
             $(progress_container).hide();
-            data = this_data[disk_key];
-            // console.log(data[0]);
-            init(data[0]);
-            animate();
+
+            stream_data = this_data[key];
+            perturber_data = this_data['perturber'];
+
+            $.ajax({
+                method: 'GET',
+                url: disk_file,
+                dataType: 'json',
+                success: function(this_data) {
+                    console.log('done loading disk data');
+                    disk_data = this_data['disk_xyz'];
+
+                    init(stream_data[0], disk_data, perturber_data[0]);
+                    animate();
+                }
+            });
         },
         error: function(e, etext) {
             console.log("error");
@@ -99,7 +113,7 @@ $(document).ready(function() {
 
 });
 
-function init(data) {
+function init(stream_data, disk_data, perturber_data) {
     var aspect = window.innerWidth / window.innerHeight;
 
     // Setup the camera
@@ -140,30 +154,83 @@ function init(data) {
     // Set up the scene
     scene = new THREE.Scene();
 
-    const geometry = new THREE.BufferGeometry();
+    var all_data = [stream_data, disk_data];
+    var names = ['stream', 'disk'];
+    var colors = [0x43a2ca, 0xffffff];
+    for (var j=0; j < all_data.length; j++) {
+        var data = all_data[j];
+        const geometry = new THREE.BufferGeometry();
 
-    var d = new Float32Array(data.length * 3);
-    for (let i=0; i < data.length; i++) {
-        d[3*i + 0] = data[i][0];
-        d[3*i + 1] = data[i][1];
-        d[3*i + 2] = data[i][2];
+        var d = new Float32Array(data.length * 3);
+        for (let i=0; i < data.length; i++) {
+            d[3*i + 0] = data[i][0];
+            d[3*i + 1] = data[i][1];
+            d[3*i + 2] = data[i][2];
+        }
+        console.log('done prepping data');
+
+        geometry.setAttribute('position',
+                            new THREE.BufferAttribute(d, 3));
+        const material = new THREE.PointsMaterial({
+            color: colors[j],
+            map: texture,
+            size: 0.15,
+            opacity: 0.2,
+            blending: THREE.AdditiveBlending, // required
+            depthTest: false, // required
+            transparent: true
+        });
+
+        var this_particles = new THREE.Points(geometry, material);
+        scene.add(this_particles);
+
+        particles[names[j]] = this_particles;
     }
-    console.log('done prepping data');
+
+    // -- Add the perturber --
+    var geometry, material;
+    geometry = new THREE.BufferGeometry();
+
+    var d = new Float32Array(3);
+    d[0] = perturber_data[0];
+    d[1] = perturber_data[1];
+    d[2] = perturber_data[2];
 
     geometry.setAttribute('position',
                           new THREE.BufferAttribute(d, 3));
-    const material = new THREE.PointsMaterial({
-        color: 0xffffff,
+    material = new THREE.PointsMaterial({
+        color: 0xf03b20,
         map: texture,
-        size: 0.2,
-        opacity: 0.2,
+        size: 2,
+        opacity: 0.6,
         blending: THREE.AdditiveBlending, // required
         depthTest: false, // required
         transparent: true
     });
 
-    particles = new THREE.Points(geometry, material);
-    scene.add(particles);
+    particles['perturber'] = new THREE.Points(geometry, material);
+    scene.add(particles['perturber']);
+
+    // -- Add the sun --
+    geometry = new THREE.Geometry();
+    var vertex = new THREE.Vector3();
+    vertex.x = -8.;
+    vertex.y = 0.;
+    vertex.z = 0.;
+    geometry.vertices.push(vertex);
+
+    material = new THREE.PointsMaterial({
+        size: 2.,
+        map: texture,
+        blending: THREE.AdditiveBlending, // required
+        depthTest: false, // required
+    });
+    material.transparent = true;
+    material.opacity = 1;
+    material.color.setHex(0xfeb24c);
+
+    particles['sun'] = new THREE.Points(geometry, material);
+    scene.add(particles['sun']);
 
     // window.addEventListener('resize', onWindowResize, false);
 
@@ -219,7 +286,7 @@ function render() {
 
     if (this_frame == config.frame)
         return true;
-    else if (this_frame >= data.length)
+    else if (this_frame >= stream_data.length)
         if (config.loop == true) {
             config.frame = 0;
             this_frame = 0;
@@ -231,13 +298,26 @@ function render() {
 
     var k = this_frame;  // timestep
 
-    var geometry = particles.geometry;
+    var geometry;
 
-    var d = new Float32Array(data[k].length * 3);
-    for (let i=0; i < data[k].length; i++) {
-        d[3*i + 0] = data[k][i][0];
-        d[3*i + 1] = data[k][i][1];
-        d[3*i + 2] = data[k][i][2];
+    // Set perturber position:
+    geometry = particles.perturber.geometry;
+
+    var d = new Float32Array(3);
+    d[0] = perturber_data[k][0];
+    d[1] = perturber_data[k][1];
+    d[2] = perturber_data[k][2];
+    geometry.setAttribute('position',
+                          new THREE.BufferAttribute(d, 3));
+
+    // --
+    geometry = particles.stream.geometry;
+
+    var d = new Float32Array(stream_data[k].length * 3);
+    for (let i=0; i < stream_data[k].length; i++) {
+        d[3*i + 0] = stream_data[k][i][0];
+        d[3*i + 1] = stream_data[k][i][1];
+        d[3*i + 2] = stream_data[k][i][2];
     }
     geometry.setAttribute('position',
                             new THREE.BufferAttribute(d, 3));
